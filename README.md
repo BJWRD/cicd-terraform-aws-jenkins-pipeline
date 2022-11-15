@@ -39,7 +39,7 @@ After setting up your Virtualbox VM and it's related network, you will want to e
     cd cicd-terraform-aws-jenkins-pipeline
 
 ## Terraform Installation 
-Before we go any further, we will need to get Terraform installed on the Virtual Machine by entering the commands below -
+Terraform installation on the Virtual Machine will be required. Enter the commands below -
 
 	 yum install yum-utils -y
 	 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
@@ -124,6 +124,24 @@ Then enter the following information and click *Save*.
 
 <img width="814" alt="Image 3" src="https://user-images.githubusercontent.com/83971386/201904068-e8d792fb-c3ee-41b4-a080-963b1758f3a2.png">
 
+## Add AWS Credentials
+Before we begin with the Jenkins Pipeline creation, the AWS Access ID and AWS Secret Key credentials will need to be added to the Jenkins instance.
+
+Select the following *Credentials* option -
+
+<img width="110" alt="image" src="https://user-images.githubusercontent.com/83971386/201968060-bf84bba7-e1eb-4a59-9ab0-d27c0ed3503c.png">
+
+Then click the *Global* link, followed by *+ Add Credentials* -
+
+<img width="263" alt="Image 2" src="https://user-images.githubusercontent.com/83971386/201968289-1554b57d-db07-46e6-9c38-381378f89305.png">
+
+For *Kind* select *Secret text*. For *ID* type *AWS_ACCESS_KEY_ID* and then paste your AWS Access Key credentials -
+
+<img width="434" alt="Image 3" src="https://user-images.githubusercontent.com/83971386/201969250-dc364f8c-0cba-4c36-aae5-0aaa9fb1292e.png">
+
+Repeat the previous step, but for the *AWS_SECRET_ACCESS_KEY*.
+
+<img width="555" alt="Image 4" src="https://user-images.githubusercontent.com/83971386/201969287-470795ce-8637-49d4-ba3c-f9737c8db36a.png">
 
 ## Create a Jenkins pipeline
 Within the Jenkins Dashboard select the 'New Item' option on the left-hand side, followed by 'Create a Job' -
