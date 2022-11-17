@@ -15,9 +15,9 @@ az_public_subnet = {
 }
 
 availability_zones = [
-  "eu-west-2a"
-  "eu-west-2b"
-  "eu-west-2c",
+  "eu-west-2a",
+  "eu-west-2b",
+  "eu-west-2c"
 ]
 
 destination_cidr_block = [
