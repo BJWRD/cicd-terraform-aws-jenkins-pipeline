@@ -20,7 +20,6 @@ ENTER ARCHITECTURE IMAGE
 # Prerequisites
 * An AWS Account with an IAM user capable of creating resources – `AdminstratorAccess`
 * A locally configured AWS profile for the above IAM user
-* Terraform installation - [steps](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 * AWS EC2 key pair - [steps](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 * Virtualbox installation - [steps](https://www.virtualbox.org/wiki/Downloads) 
 
@@ -41,9 +40,23 @@ After setting up your Virtualbox VM and it's related network, you will want to e
 ## Terraform Installation 
 Terraform installation on the Virtual Machine will be required. Enter the commands below -
 
-	 yum install yum-utils -y
-	 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-	 yum install terraform -y
+	yum install yum-utils -y
+	yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+	yum install terraform -y
+	mv /usr/local/bin/terraform /usr/bin/terraform
+	 
+## AWS CLI Installation
+AWS CLI installation on the Virtual Machine will also be required. Enter the commands below -
+
+	curl "https://awscli.amazon.com/aws-cli-exe-linux-x86_64.zip" - "awscliv2.zip"
+	unzip awscliv2.zip
+	./aws/install
+
+Then enter the following command to configure the AWS CLI with your AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY -
+	
+	aws configure
+	
+ENTER IMAGE
 
 ## S3 Bucket Creation
 It's best practice to store your *.tfstate* file as a secret within an S3 bucket for added security. Follow the steps below to set this up within your AWS Console. For more information visit the Terraform S3 page - [website](https://developer.hashicorp.com/terraform/language/settings/backends/s3) 
@@ -171,9 +184,9 @@ Update Image
 
 Update Image 2
 
-The Pipeline has successfully gone through the build, test, push and deployment phases and the EC2 instance should now be accessible -
+The Pipeline has successfully gone through the build, test, push and deployment phases and the EC2 instance should now be running and accessible -
 
-Enter meaningful SSH Connectivity test
+Enter AWS EC2 Console Image 
 
 # Requirements
 | Name          | Version       |
