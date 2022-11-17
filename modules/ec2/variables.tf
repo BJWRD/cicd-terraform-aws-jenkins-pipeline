@@ -29,6 +29,6 @@ variable "environment" {
 }
 
 variable "subnet_id" {
-  type = string
+  type    = string
   default = "aws_subnet.public_subnet.id"
 }
