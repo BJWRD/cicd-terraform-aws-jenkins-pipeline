@@ -1,5 +1,5 @@
 # cicd-terraform-aws-jenkins-pipeline
-This project involves the creation of a CICD Jenkins Pipeline which will be deploying a Terraform Architecture, using the following stages - Checkout, Verification, Test and Deploy.
+This project involves the creation of a CICD Jenkins Pipeline which will be deploying a Terraform Architecture, using the following stages - Checkout, Initialisation, Validation, Plan, Approval and Apply.
 
 In this project we will create:
 
@@ -13,7 +13,7 @@ In this project we will create:
 
 
 # Architecture
-This architecture displays the Pipeline stages - Checkout, Build, Test, Deploy.
+This architecture displays the Pipeline stages - Checkout, Initialisation, Validation, Plan, Approval and Apply.
 
 ENTER ARCHITECTURE IMAGE
 
@@ -56,7 +56,7 @@ Then enter the following command to configure the AWS CLI with your AWS_ACCESS_K
 	
 	aws configure
 	
-ENTER IMAGE
+<img width="158" alt="image" src="https://user-images.githubusercontent.com/83971386/202519071-a8010e7b-dd9d-437e-925f-16931edfa40d.png">
 
 ## S3 Bucket Creation
 It's best practice to store your *.tfstate* file as a secret within an S3 bucket for added security. Follow the steps below to set this up within your AWS Console. For more information visit the Terraform S3 page - [website](https://developer.hashicorp.com/terraform/language/settings/backends/s3) 
