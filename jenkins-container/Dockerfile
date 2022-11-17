@@ -6,3 +6,4 @@ RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz
   && rm -r docker docker-17.04.0-ce.tgz
 USER jenkins
 COPY /usr/bin/terraform /usr/bin/terraform 
+COPY /usr/bin/aws /usr/bin/aws
