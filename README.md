@@ -1,5 +1,5 @@
 # cicd-terraform-aws-jenkins-pipeline
-This project involves the creation of a CICD Jenkins Pipeline which will be deploying a Terraform Architecture, using the following stages - Checkout, Initialisation, Validation, Plan, Approval and Apply.
+This project involves the creation of a CICD Jenkins Pipeline which will be deploying a Terraform Architecture, using the following stages - Checkout, Initialisation, Validation, Plan and Apply.
 
 In this project we will create:
 
@@ -13,7 +13,7 @@ In this project we will create:
 
 
 # Architecture
-This architecture displays the Pipeline stages - Checkout, Initialisation, Validation, Plan, Approval and Apply.
+This architecture displays the Pipeline stages - Checkout, Initialisation, Validation, Plan and Apply.
 
 ENTER ARCHITECTURE IMAGE
 
@@ -167,26 +167,80 @@ You will then be presented with multiple items which can be created. We will nee
 
 Scroll down to the 'Pipeline' section and select the following Pipeline definition and copy and paste the Jenkinsfile contents within the Script field -
 
-   Update Pipeline Config 
+    pipeline {
+     agent any
+
+     environment {
+       AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+       AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+       ENVIRONMENT = 'cicd-terraform-aws-jenkins-pipeline'
+     }
+  
+     stages {
+      stage('Checkout') {
+            steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/BJWRD/cicd-terraform-aws-jenkins-pipeline']]])
+            }
+     }
+
+      stage('Initialisation') {
+        steps {
+          script {
+            echo 'Terraform Initialisation'
+            sh 'terraform init'
+          }
+        }
+      }
+
+      stage('Validation') {
+        steps {
+          script {
+            echo 'Terraform Validation'
+            sh 'terraform validate'
+            sh 'terraform fmt --recursive'
+          }
+        }
+      }
+
+      stage('Plan') {
+        steps {
+         script {
+           echo 'Terraform Plan'
+           sh 'terraform workspace new $ENVIRONMENT'
+           sh 'terraform workspace select $ENVIRONMENT'
+           sh 'terraform plan > tfplan.txt'
+         }
+        }
+      }
+
+      stage('Apply') {
+        steps {
+          script {
+           echo 'Terraform Apply'
+           sh 'terraform apply --auto-approve'
+          }
+        }
+      }  
+    }
    
-Enter Image
+<img width="408" alt="image" src="https://user-images.githubusercontent.com/83971386/202898108-44b920eb-b52d-4d45-8cac-8fd3aeff6a59.png">
 
 Click 'Save' with the 'Groovy Sandbox' tickbox selected.
 
 NOTE: if your Jenkinsfile exists within your GitHub repo, you can also select the following SCM definition which saves you from copying and pasting the contents within the 'Pipeline Script' field -
 
-Update Image
+<img width="496" alt="image" src="https://user-images.githubusercontent.com/83971386/202898162-19c0d777-cfb6-404b-bf05-d1b20db055cc.png">
 
 ## Deploy Terraform Architecture using Jenkins Pipeline
 Now we have a created Pipeline, we can finally select 'Build Now' to set the Pipeline build process in motion -
 
-Update Image
+<img width="166" alt="image" src="https://user-images.githubusercontent.com/83971386/202897612-51ed2c09-f834-4ade-aba1-5dfc6404a9aa.png">
 
-Update Image 2
+<img width="408" alt="image" src="https://user-images.githubusercontent.com/83971386/202897594-984090fa-e32c-4d5a-96dd-2cabadc4751f.png">
 
 The Pipeline has successfully gone through the build, test, push and deployment phases and the EC2 instance should now be running and accessible -
 
-Enter AWS EC2 Console Image 
+<img width="592" alt="image" src="https://user-images.githubusercontent.com/83971386/202897344-113bec71-b7b0-449c-a6aa-197602f7eecf.png">
 
 # Requirements
 | Name          | Version       |
