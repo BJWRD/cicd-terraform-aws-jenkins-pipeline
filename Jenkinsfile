@@ -4,6 +4,7 @@ pipeline {
   environment {
      AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
      AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+     ENVIRONMENT = 'cicd-terraform-aws-jenkins-pipeline'
   }
   
   stages {
@@ -36,19 +37,9 @@ pipeline {
       steps {
         script {
           echo 'Terraform Plan'
-          sh 'terraform workspace new $environment'
-          sh 'terraform workspace select $environment'
+          sh 'terraform workspace new $ENVIRONMENT'
+          sh 'terraform workspace select $ENVIRONMENT'
           sh 'terraform plan > tfplan.txt'
-        }
-      }
-    }
-
-    stage('Approval') {
-      steps {
-        script {
-          echo 'Pushing Image...'
-          input message: "Do you want to apply the plan?"
-          input message: "Please read the Terraform Plan - tfplan.txt"
         }
       }
     }
